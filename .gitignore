@@ -1,0 +1,5 @@
+tmp
+*.ipynb
+articles.txt
+dump
+__pycache__
