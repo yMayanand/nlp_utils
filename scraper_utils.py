@@ -1,10 +1,13 @@
 import os
+import re
+import string
 import random
 import requests
 from bs4 import BeautifulSoup as BS
 from urllib.request import urlretrieve
 from utils import write
-import re
+
+alpha_num = string.ascii_letters + string.digits
 
 user_agents_url = 'https://raw.githubusercontent.com/danielmiessler/SecLists/master/Fuzzing/User-Agents/UserAgents-IE.txt'
 
@@ -46,11 +49,13 @@ def extract_para(url, dir, debug=None):
     paragraphs = '\n'.join(paragraphs)
 
     title = soup.find('title')
+    
     if title:
         title = title.text.split()
     else:
-        title = str(count)
-        count += 1
+        title = random.choices(alpha_num, k=6)
+        title = "".join(title)
+        
     title = '-'.join(title[:4])
     if debug:
         file_name = title + '-' + str(debug) + '.txt'
